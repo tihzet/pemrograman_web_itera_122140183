@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pendaftaran Unik</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+         /* CSS Reset & Global Styles */
+         *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif; /* Font Utama */
+        }
+
+        body {
+            background: linear-gradient(120deg, #f6d365, #fda085); /* Gradient Background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        /* Form Container */
+        .form-wrapper {
+            background-color: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Bayangan Lebih Menonjol */
+            width: 100%;
+            max-width: 520px;
+            position: relative;
+            overflow: hidden; /* Penting untuk efek before */
+
+            /* Efek Watermark */
+            &::before {
+                content: 'Pendaftaran';
+                position: absolute;
+                top: 15px;
+                left: -20px;
+                font-size: 5rem; /* Ukuran Watermark */
+                font-family: 'Pacifico', cursive; /* Font Watermark */
+                color: rgba(255, 255, 255, 0.2); /* Transparansi Watermark */
+                z-index: -1;
+                transform: rotate(-15deg); /* Rotasi Watermark */
+                pointer-events: none; /* Watermark tidak menghalangi interaksi */
+            }
+        }
+
+        /* Form Header */
+        .form-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .form-header h1 {
+            font-size: 2.2rem;
+            color: #e94560; /* Warna Judul */
+            margin-bottom: 12px;
+            font-weight: 700; /* Judul Lebih Tebal */
+        }
+         .form-subtitle{
+            color: #555;
+         }
+
+        /* Input Groups */
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+        .input-container{
+            position: relative;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 15px 45px 15px 18px;  /* Padding untuk ikon */
+            border: none; /* Hilangkan border bawaan */
+            border-radius: 30px; /* Rounded Input */
+            font-size: 1.05rem;
+            background-color: #f8f8f8; /* Warna background input */
+            transition: box-shadow 0.3s, transform 0.2s; /* Transisi untuk focus dan hover */
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Bayangan Halus */
+
+        }
+
+          .input-container .icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            font-size: 1.3rem;
+            transition: color 0.3s; /* Transisi warna ikon */
+        }
+
+          /* Ikon (Ganti dengan ikon pilihan Anda. Ini contoh dengan Unicode) */
+        .icon-user::before{
+            content: "\f007"; /* Unicode ikon user */
+            font-family: "Font Awesome 5 Free";
+        }
+
+        .icon-envelope::before{
+            content: "\f0e0";  /* Unicode ikon amplop*/
+            font-family: "Font Awesome 5 Free";
+        }
+        .icon-lock::before{
+            content: "\f023";  /* Unicode ikon kunci*/
+            font-family: "Font Awesome 5 Free";
+        }
+        .icon-check-circle::before{
+            content: "\f058"; /* Unicode ikon centang */
+            font-family: "Font Awesome 5 Free";
+
+        }
+
+        .input-container input:focus {
+            outline: none;
+            box-shadow: 0 4px 12px rgba(233, 69, 96, 0.4); /* Bayangan saat fokus */
+            transform: translateY(-2px); /* Sedikit naik saat fokus */
+
+        }
+         /* Style error saat focus */
+        .input-container input:focus + .icon{
+            color: #e94560;
+        }
+
+        /* Error Message */
+        .error-msg {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 6px;
+            display: none;
+            animation: fadeIn 0.3s ease; /* Animasi fadeIn */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Password Toggle */
+        .password-toggle {
+            display: flex;
+            align-items: center;
+            margin-top: 12px;
+            color: #777;
+            font-size: 0.95rem;
+        }
+
+        .password-toggle input {
+            margin-right: 8px;
+            cursor: pointer;
+             /* Style untuk checkbox */
+            appearance: none; /* Hilangkan tampilan default */
+            width: 18px;
+            height: 18px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: background-color 0.3s, border-color 0.3s;
+            position: relative; /* Untuk pseudo-element checkmark */
+        }
+         /* Checkmark custom */
+        .password-toggle input:checked::before {
+            content: '\2713'; /* Unicode checkmark */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 0.8rem;
+
+        }
+
+        .password-toggle input:checked {
+            background-color: #e94560;
+            border-color: #e94560;
+        }
+
+
+        /* Submit Button */
+        .btn-submit {
+            background-color: #e94560; /* Warna tombol */
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 30px; /* Tombol Lebih Bulat */
+            font-size: 1.15rem;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(233, 69, 96, 0.3); /* Bayangan Tombol */
+        }
+
+        .btn-submit:hover {
+            background-color: #d63959; /* Warna Hover */
+            transform: scale(1.04); /* Sedikit Membesar Saat Hover */
+            box-shadow: 0 6px 15px rgba(233, 69, 96, 0.4); /* Bayangan Hover */
+        }
+
+        /* Success Message */
+        .form-message {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #4CAF50; /* Warna success */
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+            animation: slideIn 0.4s ease; /* Animasi slide */
+
+            i {
+               margin-right: 8px;
+            }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-footer{
+            text-align:center;
+            margin-top: 20px;
+            color: #000000;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="form-wrapper">
+        <div class="form-header">
+            <h1>Daftar Sekarang!</h1>
+            <p class="form-subtitle">Isi formulir di bawah ini.</p>
+        </div>
+
+        <form id="user-form">
+            <div class="input-group">
+                <label for="fullname">Nama Lengkap:</label>
+                <div class="input-container">
+                    <input type="text" id="fullname"  placeholder="Nama lengkap Anda" required>
+                    <i class="icon icon-user"></i>
+                </div>
+                <span class="error-msg" id="fullname-error"></span>
+            </div>
+
+            <div class="input-group">
+                <label for="user-email">Alamat Email:</label>
+                <div class="input-container">
+                <input type="email" id="user-email" placeholder="Email aktif Anda" required>
+                <i class="icon icon-envelope"></i>
+                </div>
+                <span class="error-msg" id="email-error"></span>
+            </div>
+
+            <div class="input-group">
+                <label for="user-password">Kata Sandi:</label>
+                <div class="input-container">
+                <input type="password" id="user-password" placeholder="Minimal 8 karakter" required>
+                 <i class="icon icon-lock"></i>
+                </div>
+                <span class="error-msg" id="password-error"></span>
+                <div class="password-toggle">
+                    <input type="checkbox" id="show-hide-password">
+                    <label for="show-hide-password">Tampilkan Sandi</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Daftar</button>
+
+            <div class="form-message" id="success-alert">
+              <i class="icon icon-check-circle"></i>  Pendaftaran berhasil!
+            </div>
+        </form>
+
+        <div class="form-footer">
+           <p>&copy; 2025  Hak Cipta Dilindungi Sang Dewa</p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userForm = document.getElementById('user-form');
+            const fullNameInput = document.getElementById('fullname');
+            const emailInput = document.getElementById('user-email');
+            const passwordInput = document.getElementById('user-password');
+            const showHideCheckbox = document.getElementById('show-hide-password');
+
+            const fullNameError = document.getElementById('fullname-error');
+            const emailError = document.getElementById('email-error');
+            const passwordError = document.getElementById('password-error');
+            const successAlert = document.getElementById('success-alert');
+
+            // Tampilkan/Sembunyikan Password
+            showHideCheckbox.addEventListener('change', () => {
+                passwordInput.type = showHideCheckbox.checked ? 'text' : 'password';
+            });
+
+            // Validasi Nama
+            const validateFullName = () => {
+                if (fullNameInput.value.trim().length <= 3) {
+                    fullNameError.style.display = 'block';
+                    fullNameError.textContent = 'Nama minimal 4 karakter.';
+                    return false;
+                }
+                fullNameError.style.display = 'none';
+                return true;
+            };
+
+            // Validasi Email
+            const validateEmail = () => {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailInput.value.trim())) {
+                    emailError.style.display = 'block';
+                    emailError.textContent = 'Format email tidak valid.';
+                    return false;
+                }
+                emailError.style.display = 'none';
+                return true;
+            };
+
+            // Validasi Password
+            const validatePassword = () => {
+                if (passwordInput.value.length < 8) {
+                    passwordError.style.display = 'block';
+                    passwordError.textContent = 'Password minimal 8 karakter.';
+                    return false;
+                }
+                passwordError.style.display = 'none';
+                return true;
+            };
+
+            // Event Listener untuk Input
+            fullNameInput.addEventListener('input', validateFullName);
+            emailInput.addEventListener('input', validateEmail);
+            passwordInput.addEventListener('input', validatePassword);
+
+            // Submit Form
+            userForm.addEventListener('submit', (e) => {
+                e.preventDefault(); // Mencegah pengiriman form standar
+                if (validateFullName() && validateEmail() && validatePassword()) {
+                    successAlert.style.display = 'block';
+                    // Simulasi pengiriman data (ganti dengan kode AJAX/fetch yang sesungguhnya)
+                    setTimeout(() => {
+                        userForm.reset();
+                        successAlert.style.display = 'none';
+                    }, 4000); // Sembunyikan pesan setelah 4 detik
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
